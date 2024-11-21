@@ -1,0 +1,118 @@
+.bubble-page {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.google-logo {
+  width: 272px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bubble-component {
+  position: absolute;
+  background-color: transparent;
+  border-radius: 50%;
+  box-sizing: border-box;
+  aspect-ratio: 1;
+
+  span {
+    position: absolute;
+    border-radius: 50%;
+    &:nth-child(1) {
+      inset: 20%;
+      border-left: 10px solid white;
+      filter: blur(10px);
+      transform: rotate(10deg);
+    }
+
+    &:nth-child(2) {
+      inset: 25%;
+      border-right: 5px solid white;
+      filter: blur(10px);
+      transform: rotate(30deg);
+    }
+  }
+
+  .white-circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+    aspect-ratio: 1;
+
+    &:nth-of-type(1) {
+      width: 5%;
+      top: 30%;
+      left: 30%;
+    }
+    &:nth-of-type(2) {
+      width: 2%;
+      top: 50%;
+      left: 25%;
+    }
+  }
+}
+
+.bubble-component_burst {
+  animation: bubble_burst 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes bubble_burst {
+  0% {
+    scale: 1;
+  }
+
+  10% {
+    scale: 0.8;
+  }
+
+  20% {
+    scale: 1.1;
+  }
+
+  30% {
+    scale: 0.95;
+  }
+  40% {
+    scale: 1.05;
+  }
+
+  49% {
+    scale: 1.05;
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  50% {
+    scale: 0.5;
+    opacity: 0.4;
+    filter: brightness(50%);
+  }
+
+  51% {
+    scale: 0;
+    opacity: 1;
+    filter: blur(0);
+  }
+  // 50% {
+  //   scale: 1;
+  // }
+
+  // 60% {
+  //   scale: 0;
+  // }
+
+  // 70% {
+  //   // scale: 0.5;
+  //   // opacity: 0.5;
+  // }
+
+  // 80%,
+  100% {
+    scale: 0;
+  }
+}
