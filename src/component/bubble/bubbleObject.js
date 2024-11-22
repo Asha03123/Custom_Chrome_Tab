@@ -8,6 +8,8 @@ export const bubbleObject = {
     const colorObj = colorArr[colorIndex];
 
     const shadow_string = `inset 0 0 25px rgb(128, 128, 128),
+            0 0 20px 10px rgba(255, 255, 255, 0.1),
+            0 0 10px 10px rgba(0, 0, 0, 0.6),
             inset 20px 20px 30px 5px ${colorObj.color},
             inset 2px 2px 30px 5px ${colorObj.color},
             inset -1px -1px 25px 10px ${colorObj.complementary},
@@ -18,13 +20,16 @@ export const bubbleObject = {
 
   createBubbles: function (innerWidth, innerHeight) {
     const bubbleConfigTemp = [];
-    for (let i = 0; i < Constants.BUBBLE_COUNT; i++) {
+    const width = 400;
+    const height = 100;
+    const topStart = innerHeight * 0.4 - height * 1.5;
+    const leftStart = innerWidth * 0.5 - width * 0.75;
+    const n = Math.round(Math.random() * Constants.BUBBLE_COUNT) || 2;
+
+    for (let i = 0; i < n; i++) {
       const sizeScale = Math.round(Math.random() * 10) / 10 || 0.1;
-      const sizeStyle = Constants.DEFAULT_SIZE * sizeScale;
-      const width = innerWidth - sizeStyle - Constants.OFFSET;
-      const height = innerHeight - sizeStyle - Constants.OFFSET;
-      const x = Math.random() * width;
-      const y = Math.random() * height;
+      const x = Math.random() * width + leftStart;
+      const y = Math.random() * height + topStart;
       const pos = { x: x, y: y };
 
       const rotateDeg = Math.round(Math.random() * 360);
@@ -36,8 +41,8 @@ export const bubbleObject = {
         id: uuidv4(),
         rotateDeg: rotateDeg,
         shadowDetail: shadowDetail,
-        width: width,
-        height: height,
+        width: innerWidth,
+        height: innerHeight,
       });
     }
 

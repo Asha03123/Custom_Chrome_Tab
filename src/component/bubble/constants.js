@@ -1,5 +1,5 @@
 export const Constants = {
-  BUBBLE_COUNT: 20,
+  BUBBLE_COUNT: 4,
   DEFAULT_SIZE: 200,
   OFFSET: 10,
   COLOR_ARR: [
