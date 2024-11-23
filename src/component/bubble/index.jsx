@@ -7,13 +7,12 @@ import { Constants } from "./constants";
 const BubbleComponent = (props) => {
   const { shadowDetail, sizeScale, pos, id, rotateDeg } = props;
   const [position, setPosition] = useState({ ...pos });
-  // const [radius, setRadius] = useState(0);
   const [opacity, setOpacity] = useState(0);
   const countRef = useRef(0);
   const [burstActivated, setBurstActivated] = useState(false);
 
   const bubbleAnimation = useCallback((width, height) => {
-    const randTime = Math.random() * 1000 + 2000;
+    const randTime = Math.random() * 2000 + 2000;
     let timeOutId;
     let intervalId = setInterval(() => {
       const x = Math.random() * width;
@@ -36,10 +35,10 @@ const BubbleComponent = (props) => {
       }
     }, randTime);
     return [timeOutId, intervalId];
-    // return [null, null];
   }, []);
 
   const burstBubble = () => {
+    if (!opacity) return;
     setBurstActivated(true);
   };
 
@@ -91,23 +90,20 @@ const MemoizedBubbleComponent = memo(BubbleComponent);
 
 const BubblePage = () => {
   const [bubbleConfig, setBubbleConfig] = useState([]);
-  const [windowConfig, setWindwowConfig] = useState({
+  const windowConfig = useRef({
     width: window.innerWidth,
     height: window.innerHeight,
   });
 
   const createBubbles = useCallback(() => {
     const config = bubbleObject.createBubbles(
-      windowConfig.width,
-      windowConfig.height
+      windowConfig.current.width,
+      windowConfig.current.height
     );
-    console.log("createBubbles ", config.length);
     setBubbleConfig((prev) => [...prev, ...config]);
-    // [windowConfig.width, windowConfig.height]
   }, []);
 
   const removeBubble = (id) => {
-    console.log("removeBubble");
     setBubbleConfig((prev) => {
       const config = [...prev];
       const ind = config.findIndex((item) => item.id === id);
@@ -116,19 +112,12 @@ const BubblePage = () => {
     });
   };
 
-  // const editBubblePosition = (ind, pos) => {
-  //   const config = [...bubbleConfig];
-  //   const configObj = { ...config[ind] };
-  //   configObj[pos] = pos;
-  //   setBubbleConfig(config);
-  // };
-
   useEffect(() => {
     const handleResize = Utility.debounce(() => {
-      setWindwowConfig({
+      windowConfig.current = {
         width: window.innerWidth,
         height: window.innerHeight,
-      });
+      };
     }, 100);
     window.addEventListener("resize", handleResize);
     return () => {};
@@ -136,7 +125,7 @@ const BubblePage = () => {
 
   useEffect(() => {
     createBubbles();
-    const bubbleCreationInterval = setInterval(createBubbles, 4000);
+    const bubbleCreationInterval = setInterval(createBubbles, 2000);
     return () => {
       clearInterval(bubbleCreationInterval);
       setBubbleConfig([]);
@@ -146,30 +135,7 @@ const BubblePage = () => {
   return (
     <div className="bubble-page">
       <img className="google-logo" src="google-white-logo.png" alt="Google" />
-      {/* <div
-        style={{
-          position: "absolute",
-          top: "40%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "600px",
-          height: "200px",
-          backgroundColor: "teal",
-        }}
-      ></div>
 
-      <div
-        style={{
-          position: "absolute",
-          top: "40%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "400px",
-          height: "100px",
-          backgroundColor: "yellow",
-          opacity: "0.4",
-        }}
-      ></div> */}
       {bubbleConfig.map((config) => {
         return (
           <MemoizedBubbleComponent
