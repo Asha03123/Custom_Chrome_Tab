@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, memo } from "react";
+import { useCallback, useEffect, useState, memo, useRef } from "react";
 import "./index.scss";
 import { bubbleObject } from "./bubbleObject";
 import { Utility } from "../../utility";
@@ -6,25 +6,30 @@ import { Constants } from "./constants";
 
 const BubbleComponent = (props) => {
   const { shadowDetail, sizeScale, pos, id, rotateDeg } = props;
-  const [position, setPosition] = useState({ ...pos, count: 0 });
+  const [position, setPosition] = useState({ ...pos });
   // const [radius, setRadius] = useState(0);
-  const [opacity, setOpacity] = useState(1);
+  const [opacity, setOpacity] = useState(0);
+  const countRef = useRef(0);
   const [burstActivated, setBurstActivated] = useState(false);
 
   const bubbleAnimation = useCallback((width, height) => {
     const randTime = Math.random() * 1000 + 2000;
     let timeOutId;
     let intervalId = setInterval(() => {
-      if (position.count > 2) {
-        props.removeBubble(id);
-      }
       const x = Math.random() * width;
       const y = Math.random() * height;
       setOpacity(0);
       if (!timeOutId) {
         timeOutId = setTimeout(() => {
-          setPosition((prev) => ({ x: x, y: y, count: prev.count + 1 }));
-          setOpacity(1);
+          countRef.current += 1;
+          if (countRef.current > 2) {
+            props.removeBubble(id);
+          } else {
+            setOpacity(1);
+          }
+          if (countRef.current > 0) {
+            setPosition({ x: x, y: y });
+          }
           clearTimeout(timeOutId);
           timeOutId = null;
         }, 1000);
@@ -92,20 +97,23 @@ const BubblePage = () => {
   });
 
   const createBubbles = useCallback(() => {
-    console.log("createBubbles");
     const config = bubbleObject.createBubbles(
       windowConfig.width,
       windowConfig.height
     );
+    console.log("createBubbles ", config.length);
     setBubbleConfig((prev) => [...prev, ...config]);
     // [windowConfig.width, windowConfig.height]
   }, []);
 
   const removeBubble = (id) => {
-    const config = [...bubbleConfig];
-    const ind = config.findIndex((item) => item.id === id);
-    config.splice(ind, 1);
-    setBubbleConfig(config);
+    console.log("removeBubble");
+    setBubbleConfig((prev) => {
+      const config = [...prev];
+      const ind = config.findIndex((item) => item.id === id);
+      config.splice(ind, 1);
+      return config;
+    });
   };
 
   // const editBubblePosition = (ind, pos) => {
@@ -128,7 +136,7 @@ const BubblePage = () => {
 
   useEffect(() => {
     createBubbles();
-    const bubbleCreationInterval = setInterval(createBubbles, 6000);
+    const bubbleCreationInterval = setInterval(createBubbles, 4000);
     return () => {
       clearInterval(bubbleCreationInterval);
       setBubbleConfig([]);
