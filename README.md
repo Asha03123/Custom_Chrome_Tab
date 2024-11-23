@@ -4,6 +4,8 @@
 
 This repository contains a basic React project that generates and repositions bubbles. It also includes instructions for setting up the page as a Chrome extension to serve as the background page for a new tab.
 
+![Sample Video](https://github.com/Asha03123/Custom_Chrome_Tab/blob/main/video/sample-video.gif)
+
 ## How to load as extension:
 
 1. Go to [chrome extenstion page](chrome://extensions/) and change to developer mode
