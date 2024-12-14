@@ -3,8 +3,11 @@
   "description": "bubbles...",
   "version": "0.3",
   "incognito": "split",
+  "manifest_version": 3,
+  "permissions": ["tabs"],
+  "host_permissions": ["<all_urls>"],
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
-  "manifest_version": 3
+  "background": {}
 }

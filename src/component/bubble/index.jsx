@@ -3,6 +3,7 @@ import "./index.scss";
 import { bubbleObject } from "./bubbleObject";
 import { Utility } from "../../utility";
 import { Constants } from "./constants";
+import Shortcuts from "../shortcut";
 
 const BubbleComponent = (props) => {
   const { shadowDetail, sizeScale, pos, id, rotateDeg } = props;
@@ -135,6 +136,8 @@ const BubblePage = () => {
   return (
     <div className="bubble-page">
       <img className="google-logo" src="google-white-logo.png" alt="Google" />
+
+      <Shortcuts />
 
       {bubbleConfig.map((config) => {
         return (

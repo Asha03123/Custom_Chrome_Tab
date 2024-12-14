@@ -1,0 +1,69 @@
+@font-face {
+  font-family: "CustomFont1";
+  src: url("../../assets/fonts/FeelfreePersonalUseRegular-lg2Bw.ttf")
+    format("truetype");
+  font-style: normal;
+}
+
+.shortcut-wrapper {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 30px;
+  z-index: 100;
+
+  a,
+  a:focus,
+  a:active,
+  a:hover {
+    text-decoration: none;
+  }
+
+  .shortcut-item {
+    box-sizing: border-box;
+    padding: 10px 20px 10px 20px;
+    border-radius: 30px;
+
+    &:hover {
+      box-shadow: inset 0 0 25px rgb(128, 128, 128),
+        inset 15px 15px 30px 5px rgba(0, 0, 255, 0.6),
+        inset -1px -1px 25px 10px rgba(255, 255, 0, 0.7),
+        inset -10px 10px 25px 5px rgb(255, 0, 0, 0.4),
+        inset 10px 10px 10px rgb(255, 0, 0, 0.7);
+    }
+
+    &:active,
+    &:focus {
+      border: 2px solid white;
+    }
+
+    .shortcut-icon {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(68, 71, 70, 1);
+      align-items: center;
+      border-radius: 50%;
+      margin-top: 16px;
+      width: 48px;
+      aspect-ratio: 1;
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .shortcut-title {
+      margin-top: 10px;
+      text-align: center;
+      color: white;
+      font-size: 26px;
+      font-family: "CustomFont1";
+    }
+  }
+}
