@@ -3,11 +3,10 @@ import { ShortcutConstant } from "./constant";
 import { memo, useState } from "react";
 
 const ShorcutItem = ({ item }) => {
-  const imageUrl = `${item.url}${ShortcutConstant.faviconUrl}`;
+  const imageUrl = item.title.toLowerCase() + "-icon.ico";
   const [imageSrc, setImageSrc] = useState(imageUrl);
 
   const handleError = (e) => {
-    console.log("hello.....");
     const defaultUrl = "default-icon.png";
     setImageSrc(defaultUrl);
   };
